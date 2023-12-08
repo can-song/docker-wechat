@@ -1,25 +1,25 @@
 #!/bin/bash
 
-groupmod -o -g $AUDIO_GID audio
-groupmod -o -g $VIDEO_GID video
-if [ $GID != $(echo `id -g wechat`) ]; then
-    groupmod -o -g $GID wechat
-fi
-if [ $UID != $(echo `id -u wechat`) ]; then
-    usermod -o -u $UID wechat
-fi
-chown wechat:wechat /WeChatFiles
+# groupmod -o -g "${AUDIO_GID}" audio
+# groupmod -o -g "${VIDEO_GID}" video
+# if [ "${GID}" != "$(id -g songcan)" ]; then
+#     groupmod -o -g "$GID" songcan
+# fi
+# if [ "${UID}" != "$(id -u songcan)" ]; then
+#     usermod -o -u $UID songcan
+# fi
 
-su wechat;
+# shellcheck disable=SC2117
+su - songcan
 
-echo "启动 $APP"
-"/opt/deepinwine/apps/Deepin-$APP/run.sh"
+echo "start wechat"
+"/opt/deepinwine/apps/Deepin-WeChat/run.sh"
 sleep 300
 
-while test -n "`pidof WeChat.exe`"
+while test -n "$(pidof WeChat.exe)"
 do
     sleep 60
 done
-echo "退出"
+echo "exit"
 
-
+# "/opt/deepinwine/apps/Deepin-$APP/run.sh"
